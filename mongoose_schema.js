@@ -37,7 +37,7 @@ const testUser1 = new TestUser({
 
 await testUser1.save();
 
-const userDb = await TestUser.findOne({});
-console.log(userDb);
+const userDb = await TestUser.findOne({}); // wybieramy pierwszy dowolny
+console.log(userDb);// i pokazujemy w consoli
 
 await mongoose.disconnect(); // rozlacza polaczenie, konczy
