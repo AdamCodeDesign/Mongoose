@@ -40,4 +40,4 @@ await testUser1.save();
 const userDb = await TestUser.findOne({});
 console.log(userDb);
 
-await mongoose.disconnect();
+await mongoose.disconnect(); // rozlacza polaczenie, konczy
