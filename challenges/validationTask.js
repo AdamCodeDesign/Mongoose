@@ -141,7 +141,7 @@ const foundation1 = new Foundation({
   name: "Dev Foundation",
   address: {
     street: "Kajdasza",
-    city: "Wrocław",
+    city: "Dzyn",
     country: "Poland",
   },
   volunteers: [
