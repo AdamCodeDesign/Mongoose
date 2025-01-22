@@ -54,12 +54,11 @@ const buildingSchema = mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    enum: ["red", "white", "green", "blue", "black"],
+    enum: ["red", "white", "green", "blue", "black", "orange"],
   },
   floorsNum: {
     type: Number,
     required: true,
-    trim: true,
     min: 0,
     max: 50,
   },
@@ -78,7 +77,6 @@ const buildingSchema = mongoose.Schema({
       floorNum: {
         type: Number,
         required: true,
-        trim: true,
         validate: {
           validator: function (floor) {
             return floor >= 0 && floor < 50;
@@ -172,10 +170,36 @@ const building4 = new Building({
   ],
 });
 
-const buildingsArr = [building2, building3, building4];
-
 try {
+  const buildingsArr = [building2, building3];
+  await Building.deleteOne({ floorsNum: 3 });
   await Building.deleteMany({});
+
+  const building1DB = await building1.save();
+  console.log("building1DB.color", building1DB.color);
+
+  await Building.insertMany(buildingsArr);
+
+  const buildingWith3Floors = await Building.findOne({ floorsNum: 3 });
+  if (buildingWith3Floors) {
+    console.log("Buildings with 3 floors with id:" + buildingWith3Floors._id);
+    buildingWith3Floors.color = "red";
+    await buildingWith3Floors.save();
+  } else {
+    console.log("No building with 3 floors found.");
+  }
+
+  const update = { color: "orange" };
+  const updateBuilding1Db = await Building.findOneAndUpdate(
+    { _id: building1DB._id },
+    update,
+    {
+      new: true,
+    }
+  );
+  console.log("updated color", updateBuilding1Db.color);
+
+  await Building.findByIdAndDelete(building1DB._id);
 } catch (error) {
   console.log(error.message);
 } finally {
