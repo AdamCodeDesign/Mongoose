@@ -121,7 +121,14 @@ const parcel1 = new Parcel({
   recipient: recipientAddressDb._id,
 });
 
+const parcel2 = new Parcel({
+  payment: 200,
+  sender: senderAddressDb._id,
+  recipient: recipientAddressDb._id,
+});
+
 const parcel1Db = await parcel1.save();
+const parcel2Db = await parcel2.save();
 
 const parcelsDB = await Parcel.find({})
   .populate("sender")
