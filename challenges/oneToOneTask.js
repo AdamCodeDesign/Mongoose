@@ -127,7 +127,7 @@ const parcelsDB = await Parcel.find({})
   .populate("sender")
   .populate("recipient");
 
-console.log("parcelsDB", parcelsDB);
+console.log("parcelsDB", JSON.stringify(parcelsDB, null, 4));
 console.table(
   parcelsDB.map((p) => ({
     sender: `${p.sender.name} ${p.sender.surname}`,
