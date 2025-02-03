@@ -61,6 +61,7 @@ async function addArtistToAlbum(artist, album) {
     { $push: { albums: album._id } },
     { new: true }
   );
+
   const dbAlbum = await Album.findByIdAndUpdate(
     album._id,
     { $push: { artists: artist._id } },
@@ -103,8 +104,8 @@ await addArtistToAlbum(artist3, album1);
 await addArtistToAlbum(artist1, album2);
 await addArtistToAlbum(artist1, album3);
 
-const artistDb = await getArtistData(artist1._id)
-const albumDb = await getAlbumData(album1._id)
+const artistDb = await getArtistData(artist1._id);
+const albumDb = await getAlbumData(album1._id);
 
-console.log('artistDb', artistDb)
-console.log('albumDb', albumDb)
+console.log("artistDb", artistDb);
+console.log("albumDb", albumDb);
