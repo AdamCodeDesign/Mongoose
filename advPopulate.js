@@ -26,7 +26,7 @@ const pageSchema = mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comments",
+      ref: "Comment",
     },
   ],
 });
@@ -109,3 +109,42 @@ const page1 = await createPage(
 const comment1 = await createComment(page1, author1, {
   body: "Comment #1 by author1",
 });
+
+const comment2 = await createComment(page1, author1, {
+  body: "Comment #2 by author1",
+});
+const comment3 = await createComment(page1, author2, {
+  body: "Comment #3 by author2",
+});
+
+const authorData = await Author.find({}).populate({
+  path: "pages",
+  populate: {
+    path: "comments",
+  },
+});
+
+console.log(JSON.stringify(authorData, null, 4));
+
+const pageData = await Page.find({}).populate({
+  path: "comments",
+  populate: {
+    path: "author",
+  },
+});
+
+// populate can use also arrays of objects so we can read author and comments of the page
+
+const pageData2 = await Page.find({}).populate([
+  {
+    path: "comments",
+    populate: {
+      path: "author",
+    },
+  },
+  {
+    path: "author",
+  },
+]);
+
+console.log(JSON.stringify(pageData2, null, 4));
