@@ -4,7 +4,7 @@ const url = "mongodb://127.0.0.1:27017/movies";
 mongoose.connect(url);
 
 const movieSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId, // dlaczego tutaj podaje _id a w pozostalych schema nie podaje?
     title: {
         type: String,
         required: true,
@@ -115,7 +115,7 @@ const userSchema = mongoose.Schema({
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: " Review",
+            ref: "Review",
         },
     ],
     created: {
@@ -125,3 +125,30 @@ const userSchema = mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+
+const reviewSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    movie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Movie",
+    },
+    body: {
+        type: String,
+        required: true,
+        trim: true,
+        minLength: 1,
+        maxLength: 2000,
+    },
+    score: {
+        type: Number,
+        validate: {
+            validator: function (score) {
+                return score >= 1 && score <= 10;
+            },
+            message: "Score must be between 1 and 10",
+        },
+    },
+});
