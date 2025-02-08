@@ -4,7 +4,7 @@ const url = "mongodb://127.0.0.1:27017/movies";
 mongoose.connect(url);
 
 const movieSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId, // dlaczego tutaj podaje _id a w pozostalych schema nie podaje?
+    _id: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,
         required: true,
@@ -316,5 +316,5 @@ const bulkOps = expandedMovies.map((movie) => ({
     },
 }));
 
-await mongoose.connection.db.collection("moviesExpanded").bulkWrite(bulkOps);
+await mongoose.connection.db.collection("moviesExpanded").bulkWrite(bulkOps); // szybsze dla duzych baz danych zamiast insertMany bo tylko aktualizuje
 console.log("Filmy zaktualizowane w 'moviesExpanded'.");
