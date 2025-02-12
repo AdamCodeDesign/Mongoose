@@ -65,3 +65,15 @@ try {
 } catch (error) {
     console.log("error", error.message);
 }
+
+export async function getAll() {
+    return await Task.find();
+}
+
+export async function getById(_id) {
+    return await Task.find({ _id });
+}
+
+export async function deleteById(_id) {
+    return await Task.deleteById({ _id });
+}
