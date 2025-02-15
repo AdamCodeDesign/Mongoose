@@ -11,7 +11,7 @@ const mimeTypes = {
     ".png": "image/png",
 };
 
-export function serverStaticFile(req, res) {
+export function serveStaticFile(req, res) {
     const baseURL = `${req.protocol}://${req.headers.host}/`;
     const parsedURL = new URL(req.url, baseURL);
 
@@ -58,7 +58,7 @@ export function serveJsonObj(res, objData) {
         res.writeHead(404, mimeTypes[".json"]);
     }
 
-    res.end(JSON.stringify(objData));
+    res.end(JSON.stringify(objData, null, 4));
 }
 
 export async function getPostData(req) {
